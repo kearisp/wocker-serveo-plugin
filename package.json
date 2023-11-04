@@ -1,0 +1,37 @@
+{
+    "name": "@wocker/serveo-plugin",
+    "version": "1.0.0",
+    "author": "Kris Papercut <krispcut@gmail.com>",
+    "description": "Wocker serveo plugin",
+    "license": "MIT",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "homepage": "https://github.com/kearisp/wocker-serveo-plugin#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kearisp/wocker-serveo-plugin.git"
+    },
+    "bugs": {
+        "url": "https://github.com/kearisp/wocker-serveo-plugin/issues"
+    },
+    "keywords": [
+        "wocker",
+        "wocker-plugin",
+        "serveo.net"
+    ],
+    "scripts": {
+        "prepare": "npm run build",
+        "watch": "tsc -w",
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "@wocker/core": "^1.0.2",
+        "@wocker/utils": "^1.0.0",
+        "fs": "^0.0.1-security",
+        "path": "^0.12.7"
+    },
+    "devDependencies": {
+        "typescript": "^5.2.2"
+    }
+}

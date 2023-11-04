@@ -1,0 +1,15 @@
+# misc
+/.idea
+/.git
+/.gitignore
+/package-lock.json
+/tsconfig.json
+*.spec.js
+*.spec.ts
+
+# dependencies
+/node_modules
+
+# local data
+/lib/tsconfig.tsbuildinfo
+/src

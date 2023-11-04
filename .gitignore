@@ -4,8 +4,6 @@
 
 # Local data
 /lib
-/dist
-/dist-ts
 
 # dotenv environment variables file
 .env
