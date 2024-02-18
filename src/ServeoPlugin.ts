@@ -331,11 +331,11 @@ export class ServeoPlugin extends Plugin {
             tail: 5
         });
 
-        stream.on("data", (data) => {
+        stream.on("data", (data: any) => {
             process.stdout.write(data);
         });
 
-        stream.on("error", (data) => {
+        stream.on("error", (data: any) => {
             process.stderr.write(data);
         });
     }
