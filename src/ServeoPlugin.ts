@@ -1,14 +1,13 @@
+import {Injectable, Cli} from "@wocker/core";
 import {
-    Injectable,
     AppConfigService,
     AppEventsService,
     ProjectService,
     DockerService,
-    Cli,
     Plugin,
     Project,
     Logger
-} from "@wocker/core";
+} from "@wocker/ws";
 import {promptConfirm, promptText} from "@wocker/utils";
 import * as FS from "fs";
 import * as Path from "path";
@@ -46,7 +45,7 @@ export class ServeoPlugin extends Plugin {
         protected projectService: ProjectService,
         protected dockerService: DockerService
     ) {
-        super();
+        super("serveo");
     }
 
     public install(cli: Cli): void {
@@ -267,9 +266,7 @@ export class ServeoPlugin extends Plugin {
 
         stream.write(`autossh -R ${subdomain ? `${subdomain}.serveo.net:` : ""}80:${project.name}.workspace:80 serveo.net\n`);
 
-        stream.on("data", (data) => {
-            // Logger.log(data.toString());
-
+        stream.on("data", (data: any) => {
             if(/Forwarding HTTP traffic/.test(data.toString())) {
                 stream.end();
             }
