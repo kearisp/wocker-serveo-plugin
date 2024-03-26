@@ -1,6 +1,6 @@
 {
     "name": "@wocker/serveo-plugin",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "Kris Papercut <krispcut@gmail.com>",
     "description": "Wocker serveo plugin",
     "license": "MIT",
@@ -33,9 +33,6 @@
     },
     "devDependencies": {
         "@types/node": "^20.11.19",
-        "typescript": "^5.2.2"
-    },
-    "peerDependencies": {
-        "@wocker/ws": "^1.0.3"
+        "typescript": "^5.4.3"
     }
 }
