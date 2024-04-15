@@ -1,12 +1,12 @@
 {
     "name": "@wocker/serveo-plugin",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "author": "Kris Papercut <krispcut@gmail.com>",
     "description": "Wocker serveo plugin",
     "license": "MIT",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
-    "homepage": "https://github.com/kearisp/wocker-serveo-plugin#readme",
+    "homepage": "https://kearisp.github.io/wocker/plugins/serveo",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/kearisp/wocker-serveo-plugin.git"

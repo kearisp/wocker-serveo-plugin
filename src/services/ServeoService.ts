@@ -3,10 +3,9 @@ import {
     AppConfigService,
     PluginConfigService,
     DockerService,
-    LogService
+    Project
 } from "@wocker/core";
 import * as Path from "path";
-import {existsSync, mkdirSync, readdirSync} from "fs";
 
 import {ENABLE_KEY, SUBDOMAIN_KEY} from "../env";
 
@@ -16,24 +15,41 @@ export class ServeoService {
     public constructor(
         protected readonly appConfigService: AppConfigService,
         protected readonly pluginConfigService: PluginConfigService,
-        protected readonly dockerService: DockerService,
-        protected readonly logService: LogService
+        protected readonly dockerService: DockerService
     ) {}
 
-    get imageName() {
+    get imageName(): string {
         return "wocker-serveo";
     }
 
-    public async start(project: any, restart?: boolean) {
-        if(!project || project.getMeta(ENABLE_KEY, "false") !== "true") {
+    public isEnabled(project: Project): boolean {
+        const enabled = project.getMeta(ENABLE_KEY, false) as string | boolean;
+
+        return typeof enabled === "string" ? enabled === "true" : enabled;
+    }
+
+    public async onStart(project: Project): Promise<void> {
+        if(!project || this.isEnabled(project)) {
             return;
         }
+
+        await this.start(project);
+    }
+
+    public async onStop(project: Project): Promise<void> {
+        if(!project || this.isEnabled(project)) {
+            return;
+        }
+
+        await this.stop(project);
+    }
+
+    public async start(project: any, restart?: boolean): Promise<void> {
+        console.info("Serveo starting...");
 
         if(restart) {
             await this.stop(project);
         }
-
-        console.info("Serveo starting...");
 
         const subdomain = project.getMeta(SUBDOMAIN_KEY);
 
@@ -57,8 +73,8 @@ export class ServeoService {
 
         const sshDir = this.pluginConfigService.dataPath(".ssh");
 
-        if(!existsSync(sshDir)) {
-            mkdirSync(sshDir, {
+        if(!this.pluginConfigService.exists(sshDir)) {
+            await this.pluginConfigService.mkdir(sshDir, {
                 recursive: true
             });
         }
@@ -78,13 +94,13 @@ export class ServeoService {
         await container.start();
     }
 
-    public async stop(project: any) {
+    public async stop(project: Project): Promise<void> {
         console.info("Serveo stopping...");
 
         await this.dockerService.removeContainer(`serveo-${project.id}`);
     }
 
-    public async build(rebuild?: boolean) {
+    public async build(rebuild?: boolean): Promise<void> {
         if(await this.dockerService.imageExists(this.imageName)) {
             if(!rebuild) {
                 return;
@@ -100,7 +116,7 @@ export class ServeoService {
         });
     }
 
-    public async logs(project: any) {
+    public async logs(project: any): Promise<void> {
         const container = await this.dockerService.getContainer(`serveo-${project.id}`);
 
         if(!container) {
