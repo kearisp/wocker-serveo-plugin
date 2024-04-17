@@ -8,6 +8,7 @@ import {
 import {promptConfirm, promptText} from "@wocker/utils";
 
 import {ServeoService} from "../services/ServeoService";
+import {ENABLE_KEY, SUBDOMAIN_KEY} from "../env";
 
 
 @Controller()
@@ -18,11 +19,11 @@ export class ServeoController {
         protected readonly serveoService: ServeoService
     ) {
         this.appEventsService.on("project:start", (project) => {
-            return this.serveoService.start(project);
+            return this.serveoService.onStart(project);
         });
 
         this.appEventsService.on("project:stop", (project) => {
-            return this.serveoService.stop(project);
+            return this.serveoService.onStop(project);
         });
     }
 
@@ -34,7 +35,7 @@ export class ServeoController {
             description: "Project name"
         })
         name?: string
-    ) {
+    ): Promise<void> {
         if(name) {
             await this.projectService.cdProject(name);
         }
@@ -43,7 +44,7 @@ export class ServeoController {
 
         const enabled = await promptConfirm({
             message: "Enable Serveo?",
-            default: project.getMeta("SERVEO_ENABLE", "true") === "true"
+            default: this.serveoService.isEnabled(project)
         });
 
         if(enabled) {
@@ -51,14 +52,15 @@ export class ServeoController {
                 message: "Subdomain: ",
                 prefix: "https://",
                 suffix: ".serveo.net",
-                default: project.getMeta("SEVEO_SUBDOMAIN", project.name) as string
+                default: project.getMeta(SUBDOMAIN_KEY, project.name)
             });
 
-            project.setMeta("SERVEO_ENABLE", "true");
-            project.setMeta("SERVEO_SUBDOMAIN", subdomain);
+            project.setMeta(ENABLE_KEY, enabled);
+            project.setMeta(SUBDOMAIN_KEY, subdomain);
         }
         else {
-            project.setMeta("SERVEO_ENABLE", "false");
+            project.unsetMeta(ENABLE_KEY);
+            project.unsetMeta(SUBDOMAIN_KEY);
         }
 
         await project.save();
@@ -84,7 +86,7 @@ export class ServeoController {
             description: "Build image"
         })
         build?: boolean
-    ) {
+    ): Promise<void> {
         if(name) {
             await this.projectService.cdProject(name);
         }
@@ -107,7 +109,7 @@ export class ServeoController {
             description: "Project name"
         })
         name?: string
-    ) {
+    ): Promise<void> {
         if(name) {
             await this.projectService.cdProject(name);
         }
@@ -125,7 +127,7 @@ export class ServeoController {
             description: "Project name"
         })
         name?: string
-    ) {
+    ): Promise<void> {
         if(name) {
             await this.projectService.cdProject(name);
         }
