@@ -29,7 +29,7 @@ export class ServeoService {
     }
 
     public async onStart(project: Project): Promise<void> {
-        if(!project || this.isEnabled(project)) {
+        if(!project || !this.isEnabled(project)) {
             return;
         }
 
@@ -37,7 +37,7 @@ export class ServeoService {
     }
 
     public async onStop(project: Project): Promise<void> {
-        if(!project || this.isEnabled(project)) {
+        if(!project || !this.isEnabled(project)) {
             return;
         }
 
