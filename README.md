@@ -2,6 +2,8 @@
 
 ###### Docker workspace for web projects
 
+> ⚠ **Deprecated.** This package is no longer maintained. Use "[dns](https://www.npmjs.com/package/@wocker/dns-plugin)" plugin instead for similar functionality.
+
 ## Installation
 
 **Note:** It is recommended to install Wocker globally to ensure accessibility from any directory in your terminal.

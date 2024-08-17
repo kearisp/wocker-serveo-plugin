@@ -12,6 +12,7 @@
 
 # Dependency directories
 /node_modules
+/package-lock.json
 jspm_packages/
 /.pnp
 .pnp.js
