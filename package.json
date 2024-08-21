@@ -1,6 +1,6 @@
 {
     "name": "@wocker/serveo-plugin",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "author": "Kris Papercut <krispcut@gmail.com>",
     "description": "Wocker serveo plugin",
     "license": "MIT",
@@ -26,8 +26,8 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@wocker/core": "^1.0.3",
-        "@wocker/utils": "^1.0.0",
+        "@wocker/core": "^1.0.11",
+        "@wocker/utils": "^1.0.5",
         "fs": "^0.0.1-security",
         "path": "^0.12.7"
     },
