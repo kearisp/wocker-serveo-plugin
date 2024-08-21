@@ -2,7 +2,7 @@
 
 ###### Docker workspace for web projects
 
-> ⚠ **Deprecated.** This package is no longer maintained. Use "[dns](https://www.npmjs.com/package/@wocker/dns-plugin)" plugin instead for similar functionality.
+> ⚠ **Deprecated.** This package is no longer maintained. Use "[rproxy](https://www.npmjs.com/package/@wocker/rproxy-plugin)" plugin instead for similar functionality.
 
 ## Installation
 
